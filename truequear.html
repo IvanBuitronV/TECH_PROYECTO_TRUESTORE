@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Trueque</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="mb-4 text-center">¡Gracias por truequear con TruStore!</h2>
+        <p class="text-center mb-4">Has seleccionado <strong><span id="cantidad"></span> unidades</strong> para
+            intercambiar.</p>
+
+        <form id="formulario-trueque">
+            <div class="form-group">
+                <label for="nombre">Tu nombre completo:</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contacto">Número de contacto:</label>
+                <input type="tel" class="form-control" id="contacto" required>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Tu dirección o ubicación aproximada:</label>
+                <input type="text" class="form-control" id="direccion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mensaje">¿Qué ofreces para truequear?</label>
+                <textarea class="form-control" id="mensaje" rows="3" placeholder="Describe aquí tu producto..."
+                    required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="imagen">¿Tienes una imagen de tu producto? (opcional)</label>
+                <input type="file" class="form-control-file" id="imagen" accept="image/*">
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block mt-3">Enviar solicitud</button>
+        </form>
+
+        <div id="respuesta" class="mt-4 text-center" style="display:none;">
+            <h5 class="text-success">Tu solicitud ha sido enviada.</h5>
+            <p>Ahora solo espera a que alguien acepte tu trueque. Si varias personas lo hacen, ¡tú eliges con quién
+                intercambiar!</p>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar cantidad de productos del carrito
+        const carrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
+        document.getElementById("cantidad").textContent = carrito.length;
+
+        // Simular envío de solicitud
+        document.getElementById("formulario-trueque").addEventListener("submit", function (e) {
+            e.preventDefault();
+            document.getElementById("formulario-trueque").style.display = "none";
+            document.getElementById("respuesta").style.display = "block";
+
+            // Aquí podrías enviar esta info a backend o almacenar en localStorage
+            console.log("Trueque enviado:", {
+                nombre: nombre.value,
+                contacto: contacto.value,
+                direccion: direccion.value,
+                mensaje: mensaje.value,
+                productosSeleccionados: carrito
+            });
+        });
+    </script>
+</body>
+
+</html>
