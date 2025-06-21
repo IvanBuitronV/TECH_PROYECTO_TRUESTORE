@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruStore</title>
+
+    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+
+    <script src="db-simulacion/datos.js"></script>
+    <script src="db-simulacion/funciones.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Encabezado de la pagina que incluye los enlaces para la navegacion -->
+    <div id="header"></div>
+
+    <!-- Inicio de los detalles de un producto-->
+    <!-- Open Content -->
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="" alt="Card image cap"
+                            id="imagenProducto">
+                    </div>
+                    
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2" id = "nombreProducto"></h1>
+                            <p class="h3 py-2" id ="unidadesProducto"></p>
+                            <p class="py-2" id = "clasificacionProducto">
+                                <span class="badge bg-success text-light" id="clasificacionProducto"></span>
+                            </p>
+                            <!-- <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Brand:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>Easy Wear</strong></p>
+                                </li>
+                            </ul> -->
+
+                            <h6>Descripción:</h6>
+                            <p id = "descripcionProducto"></p>
+
+                            <div class="row pb-3">
+                                <div class="col d-grid">
+                                    <a href="productos.html" class="btn btn-success btn-lg" id="boton-buy">Regresar</a>
+                                </div>
+                                <div class="col d-grid">
+                                    <a href="truequear.html" class="btn btn-success btn-lg" id="boton-add-to-cart">Truequear</a>
+                                </div>                      
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+     //Obtener el parametro de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const codigoProducto = urlParams.get("codigoProducto");
+
+        // Obtener el producto por su codigo
+        const producto = obtenerProductoPorCodigo(codigoProducto);
+
+        // Mostrar los detalles del producto
+        if (producto) {
+            document.getElementById("imagenProducto").src = producto.imagen;
+            document.getElementById("nombreProducto").textContent = producto.nombre;
+            document.getElementById("unidadesProducto").textContent = `Unidades disponibles: ${producto.unidades}`;
+            document.getElementById("clasificacionProducto").textContent = producto.clasificacion;
+            document.getElementById("descripcionProducto").textContent = producto.descripcion;
+        } else {
+            console.error("Producto no encontrado");
+        }
+    </script>
+<!-- Close Content -->
+
+    <!-- Fin de los detalles de un producto-->
+
+    <!-- Pie de Pagina-->
+    <div id="footer"></div>
+    
+    <!-- Start Script -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- End Script -->
+    
+    <!-- Cargar fragmentos de header y footer  -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarFragmento("header", "header.html");
+            cargarFragmento("footer", "footer.html");
+            mostrarCarrito();
+            actualizarBotonTruequear();
+
+            // Mostrar el total de unidades en el carrito
+            const botonTruequear = document.querySelector("#boton-pagar a");
+            const carrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
+
+            if (carrito.length === 0) {
+                botonTruequear.classList.add("disabled");
+                botonTruequear.style.pointerEvents = "none";
+                botonTruequear.textContent = "Agrega productos primero";
+            }
+
+        });
+    </script>
+    
+    </body>
+    
+</html>

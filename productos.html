@@ -41,18 +41,27 @@
             </ul>
         </div>
         <script>
+        // Obtener las categorías y mostrarlas en la barra lateral
             const categorias = obtenerCategorias();
                 const categoriasContainer = document.getElementById('categorias');
-                categorias.forEach(categoria => {
+
+                // Inserta primero la categoría "Todos"
+                const todosItem = document.createElement('li');
+                todosItem.className = 'pb-3';
+                todosItem.innerHTML = `
+                                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" 
+                                        href="productos.html?categoria=todos">Todos</a>`;
+                categoriasContainer.appendChild(todosItem);
+
+                // Insertar el resto de categorías
+                for (const categoria of categorias) {
                     const li = document.createElement('li');
                     li.className = 'pb-3';
                     li.innerHTML = `
-                             <a class="collapsed d-flex justify-content-between h3 text-decoration-none" 
-                             href="productos.html?categoria=${categoria.codigo}">${categoria.nombre}
-                             </a>
-                            `;
+                                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" 
+                                    href="productos.html?categoria=${categoria.codigo}">${categoria.nombre}</a>`;
                     categoriasContainer.appendChild(li);
-                });
+                }
         </script>
      
      <!--Mostrar todos los productos y la paginacion-->
@@ -78,7 +87,7 @@
                                             <img class="card-img rounded-0 img-fluid" src="${producto.imagen}">
                                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                                 <ul class="list-unstyled">
-                                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fa fa-eye"></i></a></li>
+                                                    <li><a class="btn btn-success text-white mt-2" href="detalles_producto.html?codigoProducto=${producto.codigo}"><i class="fa fa-eye"></i></a></li>
                                                     <li><a class="btn btn-success text-white mt-2 btn-add" href="#"><i class="fa fa-cart-plus"></i></a></li>
                                                 </ul>
                                             </div>

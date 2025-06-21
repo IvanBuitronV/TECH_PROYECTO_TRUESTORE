@@ -97,6 +97,7 @@ function obtenerCarrito() {
         
             mostrarCarrito();
             actualizarBotonTruequear();
+            actualizarContadorCarrito();
 
         
             // Actualizar unidades en pantalla 
@@ -122,6 +123,7 @@ function obtenerCarrito() {
         sessionStorage.setItem("carrito", JSON.stringify(carrito));
         mostrarCarrito();
         actualizarBotonTruequear();
+        actualizarContadorCarrito();
 
     
         // Recuperar stock en localStorage
@@ -187,7 +189,8 @@ function obtenerCarrito() {
         // Vaciar carrito y actualizar vista + botón
         sessionStorage.setItem("carrito", JSON.stringify([]));
         mostrarCarrito();
-        actualizarBotonTruequear(); // Esto ya se encarga de activar/desactivar y cambiar texto
+        actualizarBotonTruequear();
+        actualizarContadorCarrito();// Esto ya se encarga de activar/desactivar y cambiar texto
     }
 
 // Actualizar el botón de truequear según el estado del carrito
@@ -207,3 +210,21 @@ function obtenerCarrito() {
             }
         }
     }
+
+//Funcion obtener producto por codigo
+function obtenerProductoPorCodigo(codigoProducto) {
+    const productos = obtenerMap("productos");
+    const respuesta = productos.get(codigoProducto);
+    if (!respuesta) {
+        throw new Error(`Producto con código ${codigoProducto} no encontrado.`);
+    }
+    return respuesta;
+}
+// Actualizar el contador del carrito en la interfaz
+function actualizarContadorCarrito() {
+    const contador = document.getElementById("contador-carrito");
+    const carrito = obtenerCarrito();
+    if (contador) {
+        contador.textContent = carrito.length;
+    }
+}

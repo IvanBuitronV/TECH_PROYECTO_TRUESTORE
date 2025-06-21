@@ -107,8 +107,8 @@
             tarjeta.className = 'col-12 col-lg-3 col-md-4 col-5m-6 p-5 mt-3';
             tarjeta.innerHTML = `
                 <a href="#"><img src="${cat.imagen}" class="rounded img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">${cat.nombre}"</h5>
-                <p class="text-center mt-3 mb-3">${cat.descripcion}"</p>
+                <h5 class="text-center mt-3 mb-3">${cat.nombre}</h5>
+                <p class="text-center mt-3 mb-3">${cat.descripcion}</p>
                 <p class="text-center"><a class="btn btn-success" href="productos.html?categoria=${cat.codigo}">Ver Productos</a></p>
                 `;
                 
@@ -130,11 +130,17 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            cargarFragmento("header", "header.html");
+            cargarFragmento("header", "header.html", () => {
+                const carrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
+                const contador = document.getElementById("contador-carrito");
+                if (contador) {
+                    contador.textContent = carrito.length;
+                }
+            });
+
             cargarFragmento("footer", "footer.html");
         });
     </script>
-
 
 </body>
     
