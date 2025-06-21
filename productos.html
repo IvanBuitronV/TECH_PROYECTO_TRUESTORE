@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruStore</title>
+
+    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+     
+    <script src="db-simulacion/datos.js"></script>
+    <script src="db-simulacion/funciones.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Encabezado de la pagina que incluye los enlaces para la navegacion -->
+    <div id="header"></div>
+
+    <!-- Listado de nuestros productos -->
+
+<!-- Start Content -->
+<div class="container py-5">
+    <div class="row">
+
+         <!--Mostrar la categorias para filtrar productos-->
+        <div class="col-lg-2" >
+            <h1 class="h2 pb-4">Categorias</h1>
+            <ul class="list-unstyled" id = "categorias">
+            </ul>
+        </div>
+        <script>
+            const categorias = obtenerCategorias();
+                const categoriasContainer = document.getElementById('categorias');
+                categorias.forEach(categoria => {
+                    const li = document.createElement('li');
+                    li.className = 'pb-3';
+                    li.innerHTML = `
+                             <a class="collapsed d-flex justify-content-between h3 text-decoration-none" 
+                             href="productos.html?categoria=${categoria.codigo}">${categoria.nombre}
+                             </a>
+                            `;
+                    categoriasContainer.appendChild(li);
+                });
+        </script>
+     
+     <!--Mostrar todos los productos y la paginacion-->
+        <div class="col-lg-7">
+            <div class="row" id="productos">
+            </div>
+            <!-- Mostrar los productos -->
+            <script>
+                //Obtener el parametro de la URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const categoria = urlParams.get("categoria");
+                const productos = obtenerProductos(categoria);
+                const productosContainer = document.getElementById('productos');
+
+                productos.forEach(producto => {
+                    const col = document.createElement('div');
+                    col.setAttribute("data-codigo", producto.codigo);
+                    col.className = 'col-md-4';
+
+                    col.innerHTML = `
+                                    <div class="card mb-4 product-wap rounded-0">
+                                        <div class="card rounded-0">
+                                            <img class="card-img rounded-0 img-fluid" src="${producto.imagen}">
+                                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                                <ul class="list-unstyled">
+                                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fa fa-eye"></i></a></li>
+                                                    <li><a class="btn btn-success text-white mt-2 btn-add" href="#"><i class="fa fa-cart-plus"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                       <div class="card-body">
+                                            <a href="shop-single.html" class="h3 text-decoration-none"><strong>${producto.nombre}</strong></a>
+
+                                            <p>${producto.descripcion}</p>
+                                            <p class="text-center mb-0 unidades"><strong>Unidades disponibles:</strong> ${producto.unidades}</p>
+   
+                                            <ul class="list-unstyled d-flex justify-content-center mb-1"> 
+
+                                                ${'<i class="text-warning fa fa-star"></i>'.repeat(producto.calificacion)}
+                                                ${'<i class="text-muted fa fa-star"></i>'.repeat(5 - producto.calificacion)}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `;  
+
+                    productosContainer.appendChild(col);
+                    
+                 // para que se agonten la unidades del carrito y no siga sumando
+                    if (producto.unidades > 0) {
+                        col.querySelector(".btn-add").addEventListener('click', (e) => {
+                            e.preventDefault(); // ← evita el parpadeo
+                            agregarProducto(producto);
+                        });
+
+                    }
+                });
+            </script>
+    
+            
+            <!-- Paginacion-->
+            <div div="row">
+                <ul class="pagination pagination-lg justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"
+                            tabindex="-1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                            href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <!--Fin Mostrar todos los productos y la paginacion-->
+
+    <!--Inicio del carrito de compras-->
+        <div class="col-lg-3 bg-light p-5">
+            <h3 class="h3 pb-2">Carrito de Compras</h3>
+            <!-- Precio total -->
+            <p class="text-right pb-2"><strong>Truequear</strong> <span id="total"></span> unidades</p>
+            <!-- Elementos del carrito -->
+            <ul id="carrito" class="list-group"></ul>
+        
+            <!--  -->
+            <div id="boton-vaciar" class="btn btn-danger text-decoration-none" onclick="vaciarCarrito()">Vaciar</div>
+            <div class="btn btn-success text-decoration-none" id="boton-pagar">
+                <a class="text-decoration-none btn-success text-white" href="truequear.html" target="target_blank">Truequear</a>
+            </div>
+        </div>
+        <!--Fin del carrito de compras-->
+    </div>
+</div>
+<!-- End Content -->
+
+    <!-- Final -- Listado de nuestros productos -->
+
+    <!-- Pie de Pagina-->
+    <div id="footer"></div>
+
+    <!-- Start Script -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Cargar fragmentos de header y footer  -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarFragmento("header", "header.html");
+            cargarFragmento("footer", "footer.html");
+            mostrarCarrito(); 
+            actualizarBotonTruequear();
+
+            // Mostrar el total de unidades en el carrito
+            const botonTruequear = document.querySelector("#boton-pagar a");
+            const carrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
+
+            if (carrito.length === 0) {
+                botonTruequear.classList.add("disabled");
+                botonTruequear.style.pointerEvents = "none";
+                botonTruequear.textContent = "Agrega productos primero";
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

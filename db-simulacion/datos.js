@@ -30,3 +30,53 @@ banners = {
 
 localStorage.setItem("banners", JSON.stringify(banners));
 
+productos = {
+
+    // Categoria Electrónica y tecnología
+    "101-001": {
+        codigo: "101-001", nombre: "Smartphone X", descripcion: "Teléfono con pantalla HD y doble cámara.", categoria_codigo: "101", imagen: "img/img_productos/celular.jpg", unidades: 5, duracion: "30 días", clasificacion: "Usado"
+    },
+    "101-002": {
+        codigo: "101-002", nombre: "Laptop Pro", descripcion: "Computador portátil con gran rendimiento, ideal para trabajo y estudio.", categoria_codigo: "101", imagen: "img/img_productos/laptop.png", unidades: 5, duracion: "45 días", clasificacion: "Usado"
+    },
+    "101-003": {
+        codigo: "101-003", nombre: "Auriculares SoundMax", descripcion: "Audífonos inalámbricos con cancelación de ruido.", categoria_codigo: "101", imagen: "img/img_productos/auriculares.jpg", unidades: 5, duracion: "20 días", clasificacion: "Nuevo"
+    },
+
+    // Categoria Hogar y Ropa
+    "102-001": {
+        codigo: "102-001", nombre: "Sofá Comfort", descripcion: "Sofá de tres plazas, color gris, cómodo y elegante.", categoria_codigo: "102", imagen: "img/img_productos/sofa.png", unidades: 5, duracion: "60 días", clasificacion: "Usado"
+    },
+    "102-002": {
+        codigo: "102-002", nombre: "Juego de cortinas", descripcion: "Cortinas color beige, ideales para cualquier ambiente.", categoria_codigo: "102", imagen: "img/img_productos/cortinas.jpeg", unidades: 5, duracion: "30 días", clasificacion: "Nuevo"
+    },
+    "102-003": {
+        codigo: "102-003", nombre: "Chaqueta de cuero", descripcion: "Chaqueta negra, talla M, estilo clásico.", categoria_codigo: "102", imagen: "img/img_productos/chaqueta.png", unidades: 5, duracion: "40 días", clasificacion: "Usado"
+    },
+
+    // Categoria Educacion y Herramientas
+    "103-001": {
+        codigo: "103-001", nombre: "Libro de crecimiento personal", descripcion: "Guía sobre desarrollo personal y éxito.", categoria_codigo: "103", imagen: "img/img_productos/libro.jpg", unidades: 5, duracion: "25 días", clasificacion: "Nuevo"
+    },
+    "103-002": {
+        codigo: "103-002", nombre: "Kit de herramientas básicas", descripcion: "Set de herramientas esenciales para el hogar.", categoria_codigo: "103", imagen: "img/img_productos/herramientas.png", unidades: 5, duracion: "50 días", clasificacion: "Usado"
+    },
+    "103-003": {
+        codigo: "103-003", nombre: "Cuaderno de dibujo", descripcion: "Cuaderno con hojas especiales para artistas.", categoria_codigo: "103", imagen: "img/img_productos/cuaderno.png", unidades: 5, duracion: "30 días", clasificacion: "Nuevo"
+    },
+
+    // Categoria Donaciones
+    "104-001": {
+        codigo: "104-001", nombre: "Ropa de invierno", descripcion: "Varias tallas disponibles, en buen estado.", categoria_codigo: "104", imagen: "img/img_productos/ropa.jpg", unidades: 5, duracion: "Indefinido", clasificacion: "Donación"
+    },
+    "104-002": {
+        codigo: "104-002", nombre: "Alimentos no perecederos", descripcion: "Productos básicos para ayudar a familias necesitadas.", categoria_codigo: "104", imagen: "img/img_productos/alimentos.jpg", unidades: 5, duracion: "Indefinido", clasificacion: "Donación"
+    },
+    "104-003": {
+        codigo: "104-003", nombre: "Mochilas escolares", descripcion: "Incluyen útiles básicos para estudiantes.", categoria_codigo: "104", imagen: "img/img_productos/mochilas.jpg", unidades: 5, duracion: "Indefinido", clasificacion: "Donación"
+    },
+};
+
+localStorage.setItem("productos", JSON.stringify(productos));
+console.log("Productos guardados:", localStorage.getItem("productos"));
+
